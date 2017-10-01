@@ -22,7 +22,7 @@ public class DeltaTest {
     double result = expr()
         .setVariable("x100680_0_2", 3.0)
         .evaluate();
-    assertThat(result, is(3.0));
+    assertThat(result, is(0.0));
   }
 
   @Test
@@ -31,7 +31,7 @@ public class DeltaTest {
         .setVariable("x100680_0_2", 3.0)
         .evaluate();
 
-    assertThat(r1, is(3.0));
+    assertThat(r1, is(0.0));
 
     double r2 = expr()
         .setVariable("x100680_0_2", 1.0)
@@ -46,7 +46,7 @@ public class DeltaTest {
         .setVariable("x100680_0_2", 5.0)
         .evaluate();
 
-    assertThat(r1, is(5.0));
+    assertThat(r1, is(0.0));
 
     double r2 = expr()
         .setVariable("x100680_0_2", 6.0)
