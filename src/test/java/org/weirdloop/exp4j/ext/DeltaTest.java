@@ -1,4 +1,4 @@
-package org.weirdloop.delta;
+package org.weirdloop.exp4j.ext;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -7,6 +7,7 @@ import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 import org.junit.Before;
 import org.junit.Test;
+import org.weirdloop.exp4j.ext.Delta;
 
 public class DeltaTest {
 

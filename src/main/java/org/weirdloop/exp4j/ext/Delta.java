@@ -1,4 +1,4 @@
-package org.weirdloop.delta;
+package org.weirdloop.exp4j.ext;
 
 import net.objecthunter.exp4j.function.Function;
 
