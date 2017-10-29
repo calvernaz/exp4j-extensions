@@ -1,9 +1,7 @@
 package org.weirdloop.exp4j.ext;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,8 +19,7 @@ public class TimedExpression {
   private final Token[] tokens;
 
   private final Map<String, Double> variables;
-
-  private final Set<String> userFunctionNames;
+  private Object value;
 
   private static Map<String, Double> createDefaultVariables() {
     final Map<String, Double> vars = new HashMap<>(4);
@@ -33,25 +30,16 @@ public class TimedExpression {
     return vars;
   }
 
-
-  public TimedExpression(TimedExpression existing) {
-    this.tokens = Arrays.copyOf(existing.tokens, existing.tokens.length);
-    this.variables = new HashMap<>();
-    this.variables.putAll(existing.variables);
-    this.userFunctionNames = new HashSet<>(existing.userFunctionNames);
-  }
-
   public TimedExpression(final Token[] tokens, Set<String> userFunctionNames) {
     this.tokens = tokens;
     this.variables = createDefaultVariables();
-    this.userFunctionNames = userFunctionNames;
   }
 
 
   public ValidationResult validate(boolean checkVariablesSet) {
-    final List<String> errors = new ArrayList<>(0);
+    List<String> errors = new ArrayList<>(0);
     if (checkVariablesSet) {
-            /* check that all vars have a value set */
+      /* check that all vars have a value set */
       for (final Token t : this.tokens) {
         if (t.getType() == Token.TOKEN_VARIABLE) {
           final String var = ((VariableToken) t).getName();
@@ -122,9 +110,7 @@ public class TimedExpression {
       } else if (t.getType() == Token.TOKEN_FUNCTION) {
         FunctionToken func = (FunctionToken) t;
         //func.getFunction().getName()
-
-        double[] args = new double[0];
-        output.push(func.getFunction().apply(args));
+        output.push(func.getFunction().apply((Double) value));
       }
     }
     if (output.size() > 1) {
@@ -134,4 +120,7 @@ public class TimedExpression {
     return (double) output.pop();
   }
 
+  public void consider(Object value) {
+    this.value = value;
+  }
 }
