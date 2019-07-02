@@ -13,7 +13,8 @@ import net.objecthunter.exp4j.tokenizer.NumberToken;
 import net.objecthunter.exp4j.tokenizer.OperatorToken;
 import net.objecthunter.exp4j.tokenizer.Token;
 import net.objecthunter.exp4j.tokenizer.VariableToken;
-import org.apache.commons.collections.ArrayStack;
+
+
 public class TimedExpression {
 
   private final Token[] tokens;
@@ -106,7 +107,20 @@ public class TimedExpression {
       if (t.getType() == Token.TOKEN_NUMBER) {
         output.push(((NumberToken) t).getValue());
       } else if (t.getType() == Token.TOKEN_OPERATOR) {
-
+        OperatorToken op = (OperatorToken) t;
+        if (output.size() < op.getOperator().getNumOperands()) {
+          throw new IllegalArgumentException("Invalid number of operands available for '" + op.getOperator().getSymbol() + "' operator");
+        }
+        if (op.getOperator().getNumOperands() == 2) {
+          /* pop the operands and push the result of the operation */
+          double rightArg = output.pop();
+          double leftArg = output.pop();
+          output.push(op.getOperator().apply(leftArg, rightArg));
+        } else if (op.getOperator().getNumOperands() == 1) {
+          /* pop the operand and push the result of the operation */
+          double arg = output.pop();
+          output.push(op.getOperator().apply(arg));
+        }
       } else if (t.getType() == Token.TOKEN_FUNCTION) {
         FunctionToken func = (FunctionToken) t;
         //func.getFunction().getName()

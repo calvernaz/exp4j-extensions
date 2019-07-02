@@ -56,7 +56,7 @@ public class DeltaTest {
     assertThat(r2, is(1.0));
   }
 
-  public Expression expr() {
+  private Expression expr() {
     return new ExpressionBuilder("delta(x100680_0_2)")
         .variable("x100680_0_2")
         .function(deltaDiff)
