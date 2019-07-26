@@ -14,7 +14,7 @@ public class ByteShiftMask extends Function {
 
 	@Override
 	public double apply(double... doubles) {
-		int bitMask = 0xF;
+		int bitMask = 0xFF;
 		int value = (int)doubles[0];
 		int shift = (int)doubles[1];
 
